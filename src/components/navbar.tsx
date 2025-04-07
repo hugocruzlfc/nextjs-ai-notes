@@ -7,7 +7,7 @@ import { Plus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import AddNoteDialog from "./add-note-dialog";
+import NoteEditorDialog from "./note-editor-dialog";
 
 export default function NavBar() {
   const [showAddNoteDialog, setShowAddNoteDialog] = useState(false);
@@ -32,7 +32,10 @@ export default function NavBar() {
           </div>
         </div>
       </div>
-      <AddNoteDialog open={showAddNoteDialog} setOpen={setShowAddNoteDialog} />
+      <NoteEditorDialog
+        open={showAddNoteDialog}
+        setOpen={setShowAddNoteDialog}
+      />
     </>
   );
 }

@@ -1,8 +1,7 @@
-import { API_URL } from "@/lib/constants";
-import { CreateNoteSchema, createNoteSchema } from "@/lib/validations";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
+import { Note } from "@prisma/client";
+
+import { useNoteEditor } from "@/hooks/use-note-editor";
+import { useState } from "react";
 import LoadingButton from "./loading-button";
 import {
   Dialog,
@@ -25,40 +24,27 @@ import { Textarea } from "./ui/textarea";
 interface AddNoteDialogProps {
   open: boolean;
   setOpen: (open: boolean) => void;
+  noteToEdit?: Note;
 }
 
-export default function AddNoteDialog({ open, setOpen }: AddNoteDialogProps) {
-  const router = useRouter();
+export default function NoteEditorDialog({
+  open,
+  setOpen,
+  noteToEdit,
+}: AddNoteDialogProps) {
+  const [deleteInProgress, setDeleteInProgress] = useState(false);
 
-  const form = useForm<CreateNoteSchema>({
-    resolver: zodResolver(createNoteSchema),
-    defaultValues: {
-      title: "",
-      content: "",
-    },
+  const { form, onSubmit, deleteNote } = useNoteEditor({
+    setOpen,
+    setDeleteInProgress,
+    noteToEdit,
   });
-
-  async function onSubmit(input: CreateNoteSchema) {
-    try {
-      const response = await fetch(API_URL.NOTES, {
-        method: "POST",
-        body: JSON.stringify(input),
-      });
-      if (!response.ok) throw Error("Status code: " + response.status);
-      form.reset();
-      router.refresh();
-      setOpen(false);
-    } catch (error) {
-      console.error(error);
-      alert("Something went wrong. Please try again.");
-    }
-  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Add Note</DialogTitle>
+          <DialogTitle>{noteToEdit ? "Edit Note" : "Add Note"}</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
@@ -88,10 +74,22 @@ export default function AddNoteDialog({ open, setOpen }: AddNoteDialogProps) {
                 </FormItem>
               )}
             />
-            <DialogFooter>
+            <DialogFooter className="gap-2 sm:gap-1">
+              {noteToEdit && (
+                <LoadingButton
+                  variant="destructive"
+                  loading={deleteInProgress}
+                  disabled={form.formState.isSubmitting}
+                  onClick={deleteNote}
+                  type="button"
+                >
+                  Delete note
+                </LoadingButton>
+              )}
               <LoadingButton
                 type="submit"
                 loading={form.formState.isSubmitting}
+                disabled={deleteInProgress}
               >
                 Submit
               </LoadingButton>
