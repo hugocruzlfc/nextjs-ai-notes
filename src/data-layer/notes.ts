@@ -1,7 +1,8 @@
+import "server-only";
+
 import { getEmbedding } from "@/lib/openai";
 import { notesIndex } from "@/lib/pinecone";
 import prisma from "@/lib/prisma";
-import "server-only";
 
 async function getEmbeddingForNote(title: string, content: string | undefined) {
   return getEmbedding(`${title}\n\n${content || ""}`);
@@ -77,4 +78,24 @@ export async function deleteNoteTsx(id: string) {
 
 export async function getNotesByUser(userId: string) {
   return prisma.note.findMany({ where: { userId } });
+}
+
+export async function getNotesByVector(userId: string, messages: any[]) {
+  const embedding = await getEmbedding(
+    messages.map((message) => message.content).join("\n"),
+  );
+
+  const vectorQueryResponse = await notesIndex.query({
+    vector: embedding,
+    topK: 4,
+    filter: { userId },
+  });
+
+  return await prisma.note.findMany({
+    where: {
+      id: {
+        in: vectorQueryResponse.matches.map((match) => match.id),
+      },
+    },
+  });
 }

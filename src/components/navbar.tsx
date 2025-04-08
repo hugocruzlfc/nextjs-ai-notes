@@ -9,6 +9,7 @@ import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import AIChatButton from "./ai-chat-button";
 import NoteEditorDialog from "./note-editor-dialog";
 import ThemeToggleButton from "./theme-toggle-button";
 
@@ -36,6 +37,7 @@ export default function NavBar() {
               <Plus size={20} className="mr-2" />
               Add Note
             </Button>
+            <AIChatButton />
           </div>
         </div>
       </div>

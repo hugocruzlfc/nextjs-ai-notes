@@ -1,22 +1,11 @@
-import OpenAI from "openai";
-
-const apiKey = process.env.OPENAI_API_KEY;
-
-if (!apiKey) {
-  throw Error("OPENAI_API_KEY is not set");
-}
-
-const openai = new OpenAI({ apiKey });
-
-export default openai;
+import { openai } from "@ai-sdk/openai";
+import { embed } from "ai";
 
 export async function getEmbedding(text: string) {
-  const response = await openai.embeddings.create({
-    model: "text-embedding-ada-002",
-    input: text,
+  const { embedding } = await embed({
+    model: openai.embedding("text-embedding-3-small"),
+    value: text,
   });
-
-  const embedding = response.data[0].embedding;
 
   if (!embedding) throw Error("Error generating embedding.");
 
