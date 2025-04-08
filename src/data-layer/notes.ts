@@ -3,6 +3,7 @@ import "server-only";
 import { getEmbedding } from "@/lib/openai";
 import { notesIndex } from "@/lib/pinecone";
 import prisma from "@/lib/prisma";
+import { CoreMessage } from "ai";
 
 async function getEmbeddingForNote(title: string, content: string | undefined) {
   return getEmbedding(`${title}\n\n${content || ""}`);
@@ -80,7 +81,10 @@ export async function getNotesByUser(userId: string) {
   return prisma.note.findMany({ where: { userId } });
 }
 
-export async function getNotesByVector(userId: string, messages: any[]) {
+export async function getNotesByVector(
+  userId: string,
+  messages: CoreMessage[],
+) {
   const embedding = await getEmbedding(
     messages.map((message) => message.content).join("\n"),
   );
