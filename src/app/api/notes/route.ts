@@ -1,8 +1,8 @@
 import {
-  createNote,
-  deleteNote,
+  createNoteTsx,
+  deleteNoteTsx,
   findNoteById,
-  updateNote,
+  updateNoteTsx,
 } from "@/data-layer/notes";
 import {
   createNoteSchema,
@@ -31,7 +31,7 @@ export async function POST(req: Request) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const note = await createNote(title, userId, content);
+    const note = await createNoteTsx(title, userId, content);
 
     return Response.json({ note }, { status: 201 });
   } catch (error) {
@@ -65,7 +65,7 @@ export async function PUT(req: Request) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const updatedNote = await updateNote(id, title, content);
+    const updatedNote = await updateNoteTsx(id, title, userId, content);
 
     return Response.json({ updatedNote }, { status: 200 });
   } catch (error) {
@@ -99,7 +99,7 @@ export async function DELETE(req: Request) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    await deleteNote(id);
+    await deleteNoteTsx(id);
 
     return Response.json({ message: "Note deleted" }, { status: 200 });
   } catch (error) {
