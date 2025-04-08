@@ -1,36 +1,27 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Custom Chatbot with Next.js 15
 
-## Getting Started
+Welcome to my project's repo! This is a custom chatbot made with **Next.js 15**, **OpenAI ChatGPT**, **Vercel AI SDK**, **Pinecone**, **Shadcn UI**, **TypeScript**, **Tailwind CSS** and **Clerk**. The idea is “give quick answers based on own data”.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Modern UI**: Made with **Shadcn UI** and styled with **Tailwind CSS\*\* to make it look good and easy to use.
+- **Chatbot with AI**: Uses **OpenAI ChatGPT** via **Vercel AI SDK** for intelligent responses.
+- **Vectorized data**: **Pinecone** for fast info storage and lookup.
+- **Safe code**: All in **TypeScript** so there are no weird bugs.
+- **Fast and efficient**: Thanks to **Next.js 15**.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Technologies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- [Next.js 15](https://nextjs.org/)\*\* - React framework for modern apps.
+- [OpenAI ChatGPT](https://openai.com/)\*\* - AI model for conversations.
+- [Vercel AI SDK](https://sdk.vercel.ai/)\*\* - For easy AI connection.
+- [Pinecone](https://www.pinecone.io/)\*\* - Vector database for fast searches.
+- [Shadcn UI](https://ui.shadcn.com/)\*\* - Interface components.
+- [TypeScript](https://www.typescriptlang.org/)\*\* - JS with typing for no thunder.
+- [Tailwind CSS](https://tailwindcss.com/)\*\* - Fast and responsive styles.
+- [Clerk](https://clerk.dev/)\*\* - User authentication.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Installation
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Clone the repo the repo and install dependencies
+- Remember to create a `.env` file with your OpenAI and Pinecone API keys
